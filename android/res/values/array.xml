@@ -1,0 +1,34 @@
+<resources>
+    <string-array name="listArray">
+        <item>0.1 seconds</item>
+        <item>0.2 seconds</item>
+        <item>0.3 seconds</item>
+        <item>0.4 seconds</item>
+        <item>0.5 seconds</item>
+        <item>0.6 seconds</item>
+        <item>0.7 seconds</item>
+        <item>0.8 seconds</item>
+        <item>0.9 seconds</item>
+        <item>1.0 seconds</item>
+        <item>2.0 seconds</item>
+        <item>3.0 seconds</item>
+        <item>4.0 seconds</item>
+        <item>5.0 seconds</item>
+    </string-array>
+    <string-array name="listValues">
+        <item>0.1</item>
+        <item>0.2</item>
+        <item>0.3</item>
+        <item>0.4</item>
+        <item>0.5</item>
+        <item>0.6</item>
+        <item>0.7</item>
+        <item>0.8</item>
+        <item>0.9</item>
+        <item>1.0</item>
+        <item>2.0</item>
+        <item>3.0</item>
+        <item>4.0</item>
+        <item>5.0</item>
+    </string-array>
+</resources>

@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
@@ -19,6 +20,9 @@ public class GameScreen implements Screen {
     private HashMap<Integer, Touchpoint> map = new HashMap<Integer, Touchpoint>();
     private Array<ParticleEffectPool.PooledEffect> effects = new Array<ParticleEffectPool.PooledEffect>();
     private BitmapFont font;
+    private float timer = 0;
+    private float delay = 1;
+    private boolean soundEnabled = false;
 
     public GameScreen() {
         stage = new Stage();
@@ -28,6 +32,9 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        timer += delta;
+        if (Gdx.app.getPreferences("preferences").contains("delay")) delay = Float.parseFloat(Gdx.app.getPreferences("preferences").getString("delay"));
+        if (Gdx.app.getPreferences("preferences").contains("sound")) soundEnabled = Gdx.app.getPreferences("preferences").getBoolean("sound");
         Gdx.gl.glClearColor(0f, 0f, 0.2f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.getBatch().begin();
@@ -38,7 +45,6 @@ public class GameScreen implements Screen {
                 effects.removeValue(effect, true);
             }
         }
-        //font.draw(stage.getBatch(), "Debug", 20, 20);
         stage.getBatch().end();
         stage.act(delta);
         stage.draw();
@@ -59,6 +65,15 @@ public class GameScreen implements Screen {
                 if (map.containsKey(i)) map.remove(i);
             }
         }
+        if (timer > delay) {
+            if (map.isEmpty()) {
+                map.put(-1, new Touchpoint(MathUtils.random(Sensory.WIDTH), MathUtils.random(Sensory.HEIGHT)));
+            }
+            else {
+                if (map.containsKey(-1)) map.remove(-1);
+                timer = 0;
+            }
+        }
         for (Integer key : map.keySet()) {
             Touchpoint touchpoint = map.get(key);
             touchpoint.update(delta);
@@ -68,7 +83,7 @@ public class GameScreen implements Screen {
                 burstEffect.setPosition(touchpoint.getX(), touchpoint.getY());
                 burstEffect.getEmitters().get(0).getTint().setColors(touchpoint.getColor());
                 effects.add(burstEffect);
-                if (Gdx.app.getPreferences("preferences").getBoolean("sound")) Assets.instance.sounds.sound.play();
+                if (soundEnabled) Assets.instance.sounds.sound.play();
             }
         }
     }

@@ -2,5 +2,6 @@
 <resources>
     <string name="app_name">Sensory Wallpaper</string>
     <string name="settings_title">Sensory Wallpaper Settings</string>
+    <string name="settingsDelayTitle">Auto Spawn Delay</string>
     <string name="settingsSoundEnabledTitle">Sound Enabled</string>
 </resources>
